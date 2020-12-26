@@ -15,10 +15,19 @@ const submit = document.getElementById('MakeCatalog');
 )
 
 function makeList(){
-    const li = document.createElement('li');
-    li.innerHTML = listTitle.value;
-    listOfItems.append(li);
+    const row = document.createElement('tr');
+
+    const columnItem = document.createElement('td');
+    columnItem.innerHTML = listTitle.value;
+    row.appendChild(columnItem);
+
+    const columnQuantity = document.createElement('td');
+    columnQuantity.innerHTML = listQa.value;
+    row.appendChild(columnQuantity);
+
+    listOfItems.append(row);
     listTitle.value ='';
+    listQa.value = '1';
 
 }
 
