@@ -14,8 +14,15 @@ const submit = document.getElementById('MakeCatalog');
   }
 )
 
+
+var i = 0;
+
 function makeList(){
     const row = document.createElement('tr');
+
+    const columnNumber = document.createElement('td');
+    columnNumber.innerHTML = ++i;
+    row.appendChild(columnNumber);
 
     const columnItem = document.createElement('td');
     columnItem.innerHTML = listTitle.value;
@@ -25,12 +32,31 @@ function makeList(){
     columnQuantity.innerHTML = listQa.value;
     row.appendChild(columnQuantity);
 
+    const columnDelete = document.createElement('td');
+
+    const deleteButton = document.createElement('input')
+    deleteButton.type = 'button';
+    deleteButton.value = 'Delete';
+    deleteButton.addEventListener('click',function(event) {
+      deleteRow(event)
+    });
+
+    columnDelete.appendChild(deleteButton);
+
+    //columnDelete.innerHTML = '<input type="button" id="deleteRow" value= "Delete" onclick="deleteRow(event)">';
+    row.appendChild(columnDelete);
+
     listOfItems.append(row);
     listTitle.value ='';
     listQa.value = '1';
 
 }
 
+function deleteRow(event){
+  const delButton = event.target;
+  const rowIndex = delButton.parentElement.parentElement.rowIndex
+  listOfItems.deleteRow(rowIndex);
+}
 
 function makeGrid() {
 
