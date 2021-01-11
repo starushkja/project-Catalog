@@ -1,6 +1,4 @@
-// Select color input
-//const color = document.getElementById('colorPicker');
-// Select size input
+const selectColor = "#1d96b2";
 const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
@@ -16,6 +14,7 @@ const submit = document.getElementById('MakeCatalog');
 
 
 var i = 0;
+var selectedRowIndex = -1;
 
 function makeList(){
     const row = document.createElement('tr');
@@ -37,16 +36,24 @@ function makeList(){
     const deleteButton = document.createElement('input')
     deleteButton.type = 'button';
     deleteButton.value = 'Delete';
-    deleteButton.addEventListener('click',function(event) {
+    deleteButton.addEventListener('click', function(event) {
       deleteRow(event)
     });
 
     columnDelete.appendChild(deleteButton);
 
-    //columnDelete.innerHTML = '<input type="button" id="deleteRow" value= "Delete" onclick="deleteRow(event)">';
     row.appendChild(columnDelete);
 
     listOfItems.append(row);
+    row.addEventListener('click', function(event){
+        if (selectedRowIndex >= 0 ){
+          const prevSelectedRow = listOfItems.rows[selectedRowIndex];
+          prevSelectedRow.style.backgroundColor = "#ffffff";
+        };
+        const clickedRow = event.target.parentElement;
+        clickedRow.style.backgroundColor = selectColor;
+        selectedRowIndex = clickedRow.rowIndex;
+    });
     listTitle.value ='';
     listQa.value = '1';
 
@@ -54,26 +61,6 @@ function makeList(){
 
 function deleteRow(event){
   const delButton = event.target;
-  const rowIndex = delButton.parentElement.parentElement.rowIndex
+  const rowIndex = delButton.parentElement.parentElement.rowIndex;
   listOfItems.deleteRow(rowIndex);
-}
-
-function makeGrid() {
-
- //The old grid should be cleared
- // before creating the new one
-  //canvas.innerHTML = '';
-  //    Draw rows
-  //for (x = 0; x < gridHeight.value; x++) {
-  //  var row = document.createElement('tr');
-    //   Draw columns
-  //  for (y = 0; y < gridWidth.value; y++) {
-    //  var column = document.createElement('td');
-    //  row.appendChild(column);
-    //  column.addEventListener('click',function(event){
-    //    event.target.style.backgroundColor= color.value;
-    //  })
-//    }
-  //  canvas.append(row);
-//  }
 }
