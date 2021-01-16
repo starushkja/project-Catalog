@@ -13,7 +13,6 @@ const submit = document.getElementById('MakeCatalog');
 )
 
 
-//var i = 0;
 var selectedRowIndex = -1;
 
 function makeList(){
