@@ -13,15 +13,12 @@ const submit = document.getElementById('MakeCatalog');
 )
 
 
-var i = 0;
 var selectedRowIndex = -1;
 
 function makeList(){
     const row = document.createElement('tr');
 
-    const columnNumber = document.createElement('td');
-    columnNumber.innerHTML = ++i;
-    row.appendChild(columnNumber);
+
 
     const columnItem = document.createElement('td');
     columnItem.innerHTML = listTitle.value;
