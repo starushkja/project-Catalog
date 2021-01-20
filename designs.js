@@ -18,8 +18,6 @@ var selectedRowIndex = -1;
 function makeList(){
     const row = document.createElement('tr');
 
-
-
     const columnItem = document.createElement('td');
     columnItem.innerHTML = listTitle.value;
     row.appendChild(columnItem);
@@ -30,16 +28,33 @@ function makeList(){
 
     const columnDelete = document.createElement('td');
 
-    const deleteButton = document.createElement('input')
+    const deleteButton = document.createElement('input');
     deleteButton.type = 'button';
     deleteButton.value = 'Delete';
     deleteButton.addEventListener('click', function(event) {
-      deleteRow(event)
+      deleteRow(event);
+    });
+
+    const upButton = document.createElement('input');
+    upButton.type = 'button';
+    upButton.value = 'Up';
+    upButton.addEventListener('click', function(event) {
+      upRow(event);
+    });
+
+    const downButton = document.createElement('input')
+    downButton.type = 'button';
+    downButton.value = 'Down';
+    downButton.addEventListener('click', function(event) {
+      downRow(event);
     });
 
     columnDelete.appendChild(deleteButton);
+    columnDelete.appendChild(upButton);
+    columnDelete.appendChild(downButton);
 
     row.appendChild(columnDelete);
+
 
     listOfItems.append(row);
     row.addEventListener('click', function(event){
@@ -60,4 +75,31 @@ function deleteRow(event){
   const delButton = event.target;
   const rowIndex = delButton.parentElement.parentElement.rowIndex;
   listOfItems.deleteRow(rowIndex);
+  event.stopPropagation();
+}
+
+function upRow(event){
+  const rowToMove = event.target.parentElement.parentElement;
+  const table = rowToMove.parentElement;
+  if(rowToMove.rowIndex > 1){
+    if(selectedRowIndex == rowToMove.rowIndex){
+      selectedRowIndex--;
+    }
+    const refRow = table.rows[rowToMove.rowIndex-1];
+    table.insertBefore(rowToMove, refRow);
+  }
+  event.stopPropagation();
+}
+
+function downRow(event){
+  const rowToMove = event.target.parentElement.parentElement;
+  const table = rowToMove.parentElement;
+  if(rowToMove.rowIndex < table.rows.length){
+    if(selectedRowIndex == rowToMove.rowIndex){
+      selectedRowIndex++;
+    }
+    const refRow = table.rows[rowToMove.rowIndex+2];
+    table.insertBefore(rowToMove, refRow);
+  }
+  event.stopPropagation();
 }
