@@ -3,15 +3,12 @@ const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 
-// When size is submitted by the user, call makeGrid()
-//prevent the default, prevent  to reload the page on form submit.
 const submit = document.getElementById('MakeCatalog');
   submit.addEventListener('submit', function (e){
     e.preventDefault();
     makeList();
   }
 )
-
 
 var selectedRowIndex = -1;
 
@@ -26,7 +23,7 @@ function makeList(){
     columnQuantity.innerHTML = listQa.value;
     row.appendChild(columnQuantity);
 
-    const columnDelete = document.createElement('td');
+    const columnButton = document.createElement('td');
 
     const deleteButton = document.createElement('input');
     deleteButton.type = 'button';
@@ -49,12 +46,11 @@ function makeList(){
       downRow(event);
     });
 
-    columnDelete.appendChild(deleteButton);
-    columnDelete.appendChild(upButton);
-    columnDelete.appendChild(downButton);
+    columnButton.appendChild(deleteButton);
+    columnButton.appendChild(upButton);
+    columnButton.appendChild(downButton);
 
-    row.appendChild(columnDelete);
-
+    row.appendChild(columnButton);
 
     listOfItems.append(row);
     row.addEventListener('click', function(event){
