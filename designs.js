@@ -3,8 +3,6 @@ const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 
-// When size is submitted by the user, call makeGrid()
-//prevent the default, prevent  to reload the page on form submit.
 const submit = document.getElementById('MakeCatalog');
   submit.addEventListener('submit', function (e){
     e.preventDefault();
@@ -12,13 +10,10 @@ const submit = document.getElementById('MakeCatalog');
   }
 )
 
-
 var selectedRowIndex = -1;
 
 function makeList(){
     const row = document.createElement('tr');
-
-
 
     const columnItem = document.createElement('td');
     columnItem.innerHTML = listTitle.value;
@@ -28,18 +23,34 @@ function makeList(){
     columnQuantity.innerHTML = listQa.value;
     row.appendChild(columnQuantity);
 
-    const columnDelete = document.createElement('td');
+    const columnButton = document.createElement('td');
 
-    const deleteButton = document.createElement('input')
+    const deleteButton = document.createElement('input');
     deleteButton.type = 'button';
     deleteButton.value = 'Delete';
     deleteButton.addEventListener('click', function(event) {
-      deleteRow(event)
+      deleteRow(event);
     });
 
-    columnDelete.appendChild(deleteButton);
+    const upButton = document.createElement('input');
+    upButton.type = 'button';
+    upButton.value = 'Up';
+    upButton.addEventListener('click', function(event) {
+      upRow(event);
+    });
 
-    row.appendChild(columnDelete);
+    const downButton = document.createElement('input')
+    downButton.type = 'button';
+    downButton.value = 'Down';
+    downButton.addEventListener('click', function(event) {
+      downRow(event);
+    });
+
+    columnButton.appendChild(deleteButton);
+    columnButton.appendChild(upButton);
+    columnButton.appendChild(downButton);
+
+    row.appendChild(columnButton);
 
     listOfItems.append(row);
     row.addEventListener('click', function(event){
@@ -60,4 +71,31 @@ function deleteRow(event){
   const delButton = event.target;
   const rowIndex = delButton.parentElement.parentElement.rowIndex;
   listOfItems.deleteRow(rowIndex);
+  event.stopPropagation();
+}
+
+function upRow(event){
+  const rowToMove = event.target.parentElement.parentElement;
+  const table = rowToMove.parentElement;
+  if(rowToMove.rowIndex > 1){
+    if(selectedRowIndex == rowToMove.rowIndex){
+      selectedRowIndex--;
+    }
+    const refRow = table.rows[rowToMove.rowIndex-1];
+    table.insertBefore(rowToMove, refRow);
+  }
+  event.stopPropagation();
+}
+
+function downRow(event){
+  const rowToMove = event.target.parentElement.parentElement;
+  const table = rowToMove.parentElement;
+  if(rowToMove.rowIndex < table.rows.length){
+    if(selectedRowIndex == rowToMove.rowIndex){
+      selectedRowIndex++;
+    }
+    const refRow = table.rows[rowToMove.rowIndex+2];
+    table.insertBefore(rowToMove, refRow);
+  }
+  event.stopPropagation();
 }
