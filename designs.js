@@ -45,7 +45,7 @@ function deleteRow(){
 }
 
 function upRow(){
-    if(selectedRowIndex > 1){
+  if(selectedRowIndex > 1){
     const refRow = listOfItems.rows[selectedRowIndex-1];
     const rowToMove = listOfItems.rows[selectedRowIndex];
     listOfItems.insertBefore(rowToMove, refRow);
@@ -54,7 +54,7 @@ function upRow(){
 }
 
 function downRow(){
-    if(selectedRowIndex < listOfItems.rows.length - 1){
+  if(selectedRowIndex < listOfItems.rows.length - 1){
     const rowToMove = listOfItems.rows[selectedRowIndex];
     const refRow = listOfItems.rows[selectedRowIndex+2];
     listOfItems.insertBefore(rowToMove, refRow);
