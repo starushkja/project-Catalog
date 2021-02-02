@@ -3,25 +3,24 @@ body {
 }
 
 h1 {
-     
-font-family: sans-serif;
+    font-family: sans-serif;
     font-size: 1.5em;
-font-weight: bold;
-text-align: center;
+    font-weight: bold;
+    text-align: center;
     margin: 0 0 10px 0;
-color: #1d97bf;
+    color: #1d97bf;
 }
 
 h2 {
     margin: 1em 0 0.25em;
-color: #1d97bf;
-font-family: sans-serif;
+    color: #1d97bf;
+    font-family: sans-serif;
 }
 
 h2:first-of-type {
     margin-top: 0.5em;
-color: #1d97bf;
-font-family: sans-serif;
+    color: #1d97bf;
+    font-family: sans-serif;
 }
 
 table,
@@ -29,7 +28,6 @@ tr,
 td {
     border: 1px solid #d9d7ce;
 }
-
 
 table {
     border-collapse: collapse;
@@ -39,10 +37,11 @@ table {
 
 th {
     font-size: 11px;
-text-align: left;
-text-transform: uppercase;
-background: #f2f0e6;
-font-family: sans-serif;
+    text-align: left;
+    text-transform: uppercase;
+    background: #f2f0e6;
+    font-family: sans-serif;
+}
 
 tr {
     height: 20px;
@@ -54,4 +53,8 @@ td {
 
 input[type=number] {
     width: 6em;
+}
+
+.selectedRow{
+  background-color: #1d96b2;
 }
