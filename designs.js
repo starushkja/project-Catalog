@@ -1,5 +1,3 @@
-const selectColor = "#1d96b2";
-const prevColor =  "#ffffff";
 const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
@@ -36,10 +34,10 @@ function makeList(){
 function selectRowHandler(event){
   if (selectedRowIndex > 0 ){
     const prevSelectedRow = listOfItems.rows[selectedRowIndex];
-    prevSelectedRow.style.backgroundColor = prevColor;
+    prevSelectedRow.classList.remove("selectedRow");
   };
   const clickedRow = event.target.parentElement; //We need parentElement because target is a cell, not a row
-  clickedRow.style.backgroundColor = selectColor;
+  clickedRow.classList.add("selectedRow");
   selectedRowIndex = clickedRow.rowIndex;
 }
 
