@@ -2,15 +2,12 @@ const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 const submit = document.getElementById('MakeCatalog');
-  submit.addEventListener('submit', function (e){
-    e.preventDefault();
-    makeList();
-  }
-)
+submit.addEventListener('submit', makeList);
 
 var selectedRowIndex = 0;
 
-function makeList(){
+function makeList(event){
+    event.preventDefault();
     const row = document.createElement('tr');
 
     const columnItem = document.createElement('td');
@@ -22,13 +19,17 @@ function makeList(){
     row.appendChild(columnQuantity);
 
     listOfItems.append(row);
-    row.addEventListener('click', function(event){
-      selectRowHandler(event);
-    });
+    row.addEventListener('click', selectRowHandler);
+    row.addEventListener('dblclick', copyDataToAddForm);
 
     listTitle.value ='';
     listQa.value = '1';
+}
 
+function copyDataToAddForm(event){
+    const clickedRow = event.target.parentElement;
+    listTitle.value = clickedRow.childNodes[0].textContent
+    listQa.value = clickedRow.childNodes[1].textContent
 }
 
 function selectRowHandler(event){
