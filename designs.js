@@ -42,6 +42,17 @@ function selectRowHandler(event){
   selectedRowIndex = clickedRow.rowIndex;
 }
 
+function save(){
+    const selectedRow = listOfItems.rows[selectedRowIndex];
+    selectedRow.childNodes[0].textContent = listTitle.value;
+    selectedRow.childNodes[1].textContent = listQa.value;
+}
+
+function clearForm() {
+    listTitle.value ='';
+    listQa.value = 1;
+}
+
 function deleteRow(){
   if(selectedRowIndex > 0){
     listOfItems.deleteRow(selectedRowIndex);
