@@ -14,12 +14,12 @@
         <input type="string" id="inputTitle" name="Title" >
         Quantaty:
         <input type="number" id="inputQa" name="Quantaty" min="1" value="1">
-        <input type="submit" value= "Add">
-
+        <input type="submit" id="add" value="Add">
+        <button onclick="save()" id="saveButton">Save</button>
+        <button onclick="clearForm()" id = "clearButton">Cancel</button>
     </form>
 
-    <button onclick="save()">Save</button>
-    <button onclick="clearForm()">Cancel</button>
+
 
 
     <h2>List of items</h2>
@@ -30,8 +30,8 @@
       </tr>
      </table>
      <button onclick="deleteRow()" id="inputDelete">Delete</button>
-     <button onclick="upRow()">Up</button>
-     <button onclick="downRow()">Down</button>
+     <button onclick="upRow()" id = "up" >Up</button>
+     <button onclick="downRow()" id = "down">Down</button>
 
     <script src="designs.js"></script>
 </body>
