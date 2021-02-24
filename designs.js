@@ -2,14 +2,14 @@ const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 const submit = document.getElementById('MakeCatalog');
+submit.addEventListener('submit', makeList);
+clearForm();
 const buttonAdd = document.getElementById("add");
 const saveButton = document.getElementById("saveButton");
 const clearButton = document.getElementById("clearButton");
-const inputDelete = document.getElementById("inputDelete");
-const up = document.getElementById("up");
-const down = document.getElementById("down");
-submit.addEventListener('submit', makeList);
-clearForm();
+const buttonDelete = document.getElementById("inputDelete");
+const buttonUp = document.getElementById("up");
+const buttonDown = document.getElementById("down");
 
 var selectedRowIndex = 0;
 saveButton.style.visibility = "hidden";
@@ -40,9 +40,9 @@ function copyDataToAddForm(event){
     saveButton.style.visibility = "visible";
     clearButton.style.visibility = "visible";
     buttonAdd.style.display = "none";
-    inputDelete.disabled = true;
-    up.disabled = true;
-    down.disabled = true;
+    buttonDelete.disabled = true;
+    buttonUp.disabled = true;
+    buttonDown.disabled = true;
 }
 
 function selectRowHandler(event){
@@ -62,9 +62,9 @@ function save(){
     buttonAdd.style.display = "inline";
     saveButton.style.visibility = "hidden";
     clearButton.style.visibility = "hidden";
-    inputDelete.disabled = false;
-    up.disabled = false;
-    down.disabled = false;
+    buttonDelete.disabled = false;
+    buttonUp.disabled = false;
+    buttonDown.disabled = false;
     clearForm();
 }
 
