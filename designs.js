@@ -5,15 +5,15 @@ const submit = document.getElementById('MakeCatalog');
 submit.addEventListener('submit', makeList);
 clearForm();
 const buttonAdd = document.getElementById("add");
-const saveButton = document.getElementById("saveButton");
-const clearButton = document.getElementById("clearButton");
+const buttonSave = document.getElementById("buttonSave");
+const buttonClear = document.getElementById("buttonClear");
 const buttonDelete = document.getElementById("inputDelete");
 const buttonUp = document.getElementById("up");
 const buttonDown = document.getElementById("down");
 
 var selectedRowIndex = 0;
-saveButton.style.visibility = "hidden";
-clearButton.style.visibility = "hidden";
+buttonSave.style.visibility = "hidden";
+buttonClear.style.visibility = "hidden";
 
 function makeList(event){
     event.preventDefault();
@@ -34,15 +34,11 @@ function makeList(event){
 }
 
 function copyDataToAddForm(event){
+    event.preventDefault();
     const clickedRow = event.target.parentElement;
     listTitle.value = clickedRow.childNodes[0].textContent
     listQa.value = clickedRow.childNodes[1].textContent
-    saveButton.style.visibility = "visible";
-    clearButton.style.visibility = "visible";
-    buttonAdd.style.display = "none";
-    buttonDelete.disabled = true;
-    buttonUp.disabled = true;
-    buttonDown.disabled = true;
+    contraEdit(true);
 }
 
 function selectRowHandler(event){
@@ -55,22 +51,41 @@ function selectRowHandler(event){
   selectedRowIndex = clickedRow.rowIndex;
 }
 
-function save(){
+function save(event){
     const selectedRow = listOfItems.rows[selectedRowIndex];
     selectedRow.childNodes[0].textContent = listTitle.value;
     selectedRow.childNodes[1].textContent = listQa.value;
-    buttonAdd.style.display = "inline";
-    saveButton.style.visibility = "hidden";
-    clearButton.style.visibility = "hidden";
-    buttonDelete.disabled = false;
-    buttonUp.disabled = false;
-    buttonDown.disabled = false;
+    contraEdit(false);
+    clearForm();
+}
+
+function cancel(event){
+    contraEdit(false);
     clearForm();
 }
 
 function clearForm() {
     listTitle.value ='';
     listQa.value = 1;
+}
+
+function contraEdit(mode){
+  if (mode) {
+    buttonSave.style.visibility = "visible";
+    buttonClear.style.visibility = "visible";
+    buttonAdd.style.display = "none";
+    buttonDelete.disabled = true;
+    buttonUp.disabled = true;
+    buttonDown.disabled = true;
+  }
+  else {
+    buttonAdd.style.display = "inline";
+    buttonSave.style.visibility = "hidden";
+    buttonClear.style.visibility = "hidden";
+    buttonDelete.disabled = false;
+    buttonUp.disabled = false;
+    buttonDown.disabled = false;
+  }
 }
 
 function deleteRow(){
