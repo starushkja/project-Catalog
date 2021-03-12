@@ -2,15 +2,21 @@ const listTitle = document.getElementById('inputTitle');
 const listQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 const submit = document.getElementById('MakeCatalog');
-  submit.addEventListener('submit', function (e){
-    e.preventDefault();
-    makeList();
-  }
-)
+submit.addEventListener('submit', makeList);
+clearForm();
+const buttonAdd = document.getElementById("add");
+const buttonSave = document.getElementById("buttonSave");
+const buttonClear = document.getElementById("buttonClear");
+const buttonDelete = document.getElementById("inputDelete");
+const buttonUp = document.getElementById("up");
+const buttonDown = document.getElementById("down");
 
 var selectedRowIndex = 0;
+buttonSave.style.visibility = "hidden";
+buttonClear.style.visibility = "hidden";
 
-function makeList(){
+function makeList(event){
+    event.preventDefault();
     const row = document.createElement('tr');
 
     const columnItem = document.createElement('td');
@@ -22,13 +28,17 @@ function makeList(){
     row.appendChild(columnQuantity);
 
     listOfItems.append(row);
-    row.addEventListener('click', function(event){
-      selectRowHandler(event);
-    });
+    row.addEventListener('click', selectRowHandler);
+    row.addEventListener('dblclick', copyDataToAddForm);
+    clearForm();
+}
 
-    listTitle.value ='';
-    listQa.value = '1';
-
+function copyDataToAddForm(event){
+    event.preventDefault();
+    const clickedRow = event.target.parentElement;
+    listTitle.value = clickedRow.childNodes[0].textContent
+    listQa.value = clickedRow.childNodes[1].textContent
+    contraEdit(true);
 }
 
 function selectRowHandler(event){
@@ -39,6 +49,43 @@ function selectRowHandler(event){
   const clickedRow = event.target.parentElement; //We need parentElement because target is a cell, not a row
   clickedRow.classList.add("selectedRow");
   selectedRowIndex = clickedRow.rowIndex;
+}
+
+function save(event){
+    const selectedRow = listOfItems.rows[selectedRowIndex];
+    selectedRow.childNodes[0].textContent = listTitle.value;
+    selectedRow.childNodes[1].textContent = listQa.value;
+    contraEdit(false);
+    clearForm();
+}
+
+function cancel(event){
+    contraEdit(false);
+    clearForm();
+}
+
+function clearForm() {
+    listTitle.value ='';
+    listQa.value = 1;
+}
+
+function contraEdit(mode){
+  if (mode) {
+    buttonSave.style.visibility = "visible";
+    buttonClear.style.visibility = "visible";
+    buttonAdd.style.display = "none";
+    buttonDelete.disabled = true;
+    buttonUp.disabled = true;
+    buttonDown.disabled = true;
+  }
+  else {
+    buttonAdd.style.display = "inline";
+    buttonSave.style.visibility = "hidden";
+    buttonClear.style.visibility = "hidden";
+    buttonDelete.disabled = false;
+    buttonUp.disabled = false;
+    buttonDown.disabled = false;
+  }
 }
 
 function deleteRow(){
