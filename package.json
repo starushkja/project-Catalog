@@ -1,0 +1,22 @@
+{
+  "name": "project-catalog",
+  "version": "1.0.0",
+  "description": "Catalog of arbitrary items. It can be used as a shopping list.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starushkja/project-Catalog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starushkja/project-Catalog/issues"
+  },
+  "homepage": "https://github.com/starushkja/project-Catalog#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
