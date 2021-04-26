@@ -33,8 +33,7 @@ function makeList(event){
     clearForm();
 }
 
-function copyDataToAddForm(event){
-    event.preventDefault();
+function copyDataToAddForm(){
     const clickedRow = event.target.parentElement;
     listTitle.value = clickedRow.childNodes[0].textContent
     listQa.value = clickedRow.childNodes[1].textContent
@@ -51,7 +50,7 @@ function selectRowHandler(event){
   selectedRowIndex = clickedRow.rowIndex;
 }
 
-function save(event){
+function save(){
     const selectedRow = listOfItems.rows[selectedRowIndex];
     selectedRow.childNodes[0].textContent = listTitle.value;
     selectedRow.childNodes[1].textContent = listQa.value;
@@ -112,3 +111,26 @@ function downRow(){
     selectedRowIndex++;
   }
 }
+
+function loadCatalog() {
+  const xhr = new XMLHttpRequest();
+  xhr.ontimeout = function () {
+      console.error("The request for " + url + " timed out.");
+  };
+  xhr.onload = function() {
+      if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+              console.log(xhr.responseText)
+          } else {
+              console.error(xhr.statusText);
+          }
+      }
+  };
+  const jsonFileName = "catalog.json"
+  const timeout = 5;
+  xhr.open("GET", jsonFileName, true);
+  xhr.timeout = timeout;
+  xhr.send(null);
+}
+
+loadCatalog()
