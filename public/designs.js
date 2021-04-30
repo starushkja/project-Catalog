@@ -1,8 +1,8 @@
-const listTitle = document.getElementById('inputTitle');
-const listQa= document.getElementById('inputQa');
+const inputTitle = document.getElementById('inputTitle');
+const inputQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 const submit = document.getElementById('MakeCatalog');
-submit.addEventListener('submit', makeList);
+submit.addEventListener('submit', formSubmitListener);
 clearForm();
 const buttonAdd = document.getElementById("add");
 const buttonSave = document.getElementById("buttonSave");
@@ -15,28 +15,32 @@ var selectedRowIndex = 0;
 buttonSave.style.visibility = "hidden";
 buttonClear.style.visibility = "hidden";
 
-function makeList(event){
+function formSubmitListener(event) {
     event.preventDefault();
-    const row = document.createElement('tr');
-
-    const columnItem = document.createElement('td');
-    columnItem.innerHTML = listTitle.value;
-    row.appendChild(columnItem);
-
-    const columnQuantity = document.createElement('td');
-    columnQuantity.innerHTML = listQa.value;
-    row.appendChild(columnQuantity);
-
-    listOfItems.append(row);
-    row.addEventListener('click', selectRowHandler);
-    row.addEventListener('dblclick', copyDataToAddForm);
+    addRow(inputTitle.value, inputQa.value)
     clearForm();
+}
+
+function addRow(name, qty) {
+  const row = document.createElement('tr');
+
+  const columnItem = document.createElement('td');
+  columnItem.innerHTML = name;
+  row.appendChild(columnItem);
+
+  const columnQuantity = document.createElement('td');
+  columnQuantity.innerHTML = qty;
+  row.appendChild(columnQuantity);
+
+  listOfItems.append(row);
+  row.addEventListener('click', selectRowHandler);
+  row.addEventListener('dblclick', copyDataToAddForm);
 }
 
 function copyDataToAddForm(){
     const clickedRow = event.target.parentElement;
-    listTitle.value = clickedRow.childNodes[0].textContent
-    listQa.value = clickedRow.childNodes[1].textContent
+    inputTitle.value = clickedRow.childNodes[0].textContent
+    inputQa.value = clickedRow.childNodes[1].textContent
     contraEdit(true);
 }
 
@@ -52,8 +56,8 @@ function selectRowHandler(event){
 
 function save(){
     const selectedRow = listOfItems.rows[selectedRowIndex];
-    selectedRow.childNodes[0].textContent = listTitle.value;
-    selectedRow.childNodes[1].textContent = listQa.value;
+    selectedRow.childNodes[0].textContent = inputTitle.value;
+    selectedRow.childNodes[1].textContent = inputQa.value;
     contraEdit(false);
     clearForm();
 }
@@ -64,8 +68,8 @@ function cancel(event){
 }
 
 function clearForm() {
-    listTitle.value ='';
-    listQa.value = 1;
+    inputTitle.value ='';
+    inputQa.value = 1;
 }
 
 function contraEdit(mode){
