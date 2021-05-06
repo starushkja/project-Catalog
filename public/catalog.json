@@ -1,6 +1,6 @@
 {
   "items": [
-    {"name": "game", "quantaty": 1},
-    {"name": "beverage", "quantaty": 10}
+    {"name": "game", "quantity": 1},
+    {"name": "beverage", "quantity": 10}
   ]
 }

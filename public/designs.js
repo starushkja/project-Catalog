@@ -10,10 +10,13 @@ const buttonClear = document.getElementById("buttonClear");
 const buttonDelete = document.getElementById("inputDelete");
 const buttonUp = document.getElementById("up");
 const buttonDown = document.getElementById("down");
+const parError = document.getElementById("parError")
 
 var selectedRowIndex = 0;
 buttonSave.style.visibility = "hidden";
 buttonClear.style.visibility = "hidden";
+
+parError.style.visibility = "hidden";
 
 function formSubmitListener(event) {
     event.preventDefault();
@@ -119,19 +122,26 @@ function downRow(){
 function loadCatalog() {
   const xhr = new XMLHttpRequest();
   xhr.ontimeout = function () {
-      console.error("The request for " + url + " timed out.");
+      console.error("The request for " + jsonFileName + " timed out.");
   };
   xhr.onload = function() {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-              console.log(xhr.responseText)
+            var response = JSON.parse(xhr.responseText)
+            for (var i = 0; i < response.items.length; i++) {
+              console.log("name = " + response.items[i].name + " quantity = " + response.items[i].quantity);
+              // TODO: use addRow below to add the rows to the items list
+              // addRow(.....)
+              addRow(response.items[i].name, response.items[i].quantity)
+            }
           } else {
               console.error(xhr.statusText);
+              parError.style.visibility = "visible";
           }
       }
   };
   const jsonFileName = "catalog.json"
-  const timeout = 5;
+  const timeout = 5000;
   xhr.open("GET", jsonFileName, true);
   xhr.timeout = timeout;
   xhr.send(null);

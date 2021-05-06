@@ -58,3 +58,8 @@ input[type=number] {
 .selectedRow{
   background-color: #1d96b2;
 }
+
+.error {
+  color: red;
+	font-size: 24px;
+}
