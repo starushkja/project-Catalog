@@ -10,13 +10,16 @@ const buttonClear = document.getElementById("buttonClear");
 const buttonDelete = document.getElementById("inputDelete");
 const buttonUp = document.getElementById("up");
 const buttonDown = document.getElementById("down");
-const parError = document.getElementById("parError")
+const parError = document.getElementById("parError");
+const imgSpinner = document.getElementById("spinner");
+
 
 var selectedRowIndex = 0;
 buttonSave.style.visibility = "hidden";
 buttonClear.style.visibility = "hidden";
 
 parError.style.visibility = "hidden";
+imgSpinner.style.visibility = "hidden";
 
 function formSubmitListener(event) {
     event.preventDefault();
@@ -123,6 +126,8 @@ function loadCatalog() {
   const xhr = new XMLHttpRequest();
   xhr.ontimeout = function () {
       console.error("The request for " + jsonFileName + " timed out.");
+      imgSpinner.style.visibility = "hidden";
+      parError.style.visibility = "visible";
   };
   xhr.onload = function() {
       if (xhr.readyState === 4) {
@@ -132,16 +137,19 @@ function loadCatalog() {
               console.log("name = " + response.items[i].name + " quantity = " + response.items[i].quantity);
               // TODO: use addRow below to add the rows to the items list
               // addRow(.....)
+              imgSpinner.style.visibility = "hidden";
               addRow(response.items[i].name, response.items[i].quantity)
             }
           } else {
               console.error(xhr.statusText);
               parError.style.visibility = "visible";
+              imgSpinner.style.visibility = "hidden";
           }
       }
   };
   const jsonFileName = "catalog.json"
   const timeout = 5000;
+  imgSpinner.style.visibility = "visible";
   xhr.open("GET", jsonFileName, true);
   xhr.timeout = timeout;
   xhr.send(null);
