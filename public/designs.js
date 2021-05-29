@@ -135,8 +135,7 @@ function loadCatalog() {
             var response = JSON.parse(xhr.responseText)
             for (var i = 0; i < response.items.length; i++) {
               console.log("name = " + response.items[i].name + " quantity = " + response.items[i].quantity);
-              // TODO: use addRow below to add the rows to the items list
-              // addRow(.....)
+                            // addRow(.....)
               imgSpinner.style.visibility = "hidden";
               addRow(response.items[i].name, response.items[i].quantity)
             }
