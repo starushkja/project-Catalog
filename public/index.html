@@ -20,7 +20,7 @@
 
     <button onclick="save()" id="buttonSave">Save</button>
     <button onclick="cancel()" id = "buttonClear">Cancel</button>
-
+    <p id ="parError" class="error">Error during loading data from the server. Please try again later.</p>
 
     <h2>List of items</h2>
     <table id="listBook" style="width:60%">
@@ -33,6 +33,7 @@
      <button onclick="upRow()" id = "up" >Up</button>
      <button onclick="downRow()" id = "down">Down</button>
 
+     <img src="spinner.gif" id ="spinner" alt="Spinner">
     <script src="designs.js"></script>
 </body>
 </html>

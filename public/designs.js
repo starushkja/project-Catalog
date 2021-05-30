@@ -1,8 +1,8 @@
-const listTitle = document.getElementById('inputTitle');
-const listQa= document.getElementById('inputQa');
+const inputTitle = document.getElementById('inputTitle');
+const inputQa= document.getElementById('inputQa');
 const listOfItems = document.getElementById('listBook');
 const submit = document.getElementById('MakeCatalog');
-submit.addEventListener('submit', makeList);
+submit.addEventListener('submit', formSubmitListener);
 clearForm();
 const buttonAdd = document.getElementById("add");
 const buttonSave = document.getElementById("buttonSave");
@@ -10,33 +10,43 @@ const buttonClear = document.getElementById("buttonClear");
 const buttonDelete = document.getElementById("inputDelete");
 const buttonUp = document.getElementById("up");
 const buttonDown = document.getElementById("down");
+const parError = document.getElementById("parError");
+const imgSpinner = document.getElementById("spinner");
+
 
 var selectedRowIndex = 0;
 buttonSave.style.visibility = "hidden";
 buttonClear.style.visibility = "hidden";
 
-function makeList(event){
+parError.style.visibility = "hidden";
+imgSpinner.style.visibility = "hidden";
+
+function formSubmitListener(event) {
     event.preventDefault();
-    const row = document.createElement('tr');
-
-    const columnItem = document.createElement('td');
-    columnItem.innerHTML = listTitle.value;
-    row.appendChild(columnItem);
-
-    const columnQuantity = document.createElement('td');
-    columnQuantity.innerHTML = listQa.value;
-    row.appendChild(columnQuantity);
-
-    listOfItems.append(row);
-    row.addEventListener('click', selectRowHandler);
-    row.addEventListener('dblclick', copyDataToAddForm);
+    addRow(inputTitle.value, inputQa.value)
     clearForm();
+}
+
+function addRow(name, qty) {
+  const row = document.createElement('tr');
+
+  const columnItem = document.createElement('td');
+  columnItem.innerHTML = name;
+  row.appendChild(columnItem);
+
+  const columnQuantity = document.createElement('td');
+  columnQuantity.innerHTML = qty;
+  row.appendChild(columnQuantity);
+
+  listOfItems.append(row);
+  row.addEventListener('click', selectRowHandler);
+  row.addEventListener('dblclick', copyDataToAddForm);
 }
 
 function copyDataToAddForm(){
     const clickedRow = event.target.parentElement;
-    listTitle.value = clickedRow.childNodes[0].textContent
-    listQa.value = clickedRow.childNodes[1].textContent
+    inputTitle.value = clickedRow.childNodes[0].textContent
+    inputQa.value = clickedRow.childNodes[1].textContent
     contraEdit(true);
 }
 
@@ -52,8 +62,8 @@ function selectRowHandler(event){
 
 function save(){
     const selectedRow = listOfItems.rows[selectedRowIndex];
-    selectedRow.childNodes[0].textContent = listTitle.value;
-    selectedRow.childNodes[1].textContent = listQa.value;
+    selectedRow.childNodes[0].textContent = inputTitle.value;
+    selectedRow.childNodes[1].textContent = inputQa.value;
     contraEdit(false);
     clearForm();
 }
@@ -64,8 +74,8 @@ function cancel(event){
 }
 
 function clearForm() {
-    listTitle.value ='';
-    listQa.value = 1;
+    inputTitle.value ='';
+    inputQa.value = 1;
 }
 
 function contraEdit(mode){
@@ -115,19 +125,30 @@ function downRow(){
 function loadCatalog() {
   const xhr = new XMLHttpRequest();
   xhr.ontimeout = function () {
-      console.error("The request for " + url + " timed out.");
+      console.error("The request for " + jsonFileName + " timed out.");
+      imgSpinner.style.visibility = "hidden";
+      parError.style.visibility = "visible";
   };
   xhr.onload = function() {
       if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-              console.log(xhr.responseText)
+            var response = JSON.parse(xhr.responseText)
+            for (var i = 0; i < response.items.length; i++) {
+              console.log("name = " + response.items[i].name + " quantity = " + response.items[i].quantity);
+                            // addRow(.....)
+              imgSpinner.style.visibility = "hidden";
+              addRow(response.items[i].name, response.items[i].quantity)
+            }
           } else {
               console.error(xhr.statusText);
+              parError.style.visibility = "visible";
+              imgSpinner.style.visibility = "hidden";
           }
       }
   };
   const jsonFileName = "catalog.json"
-  const timeout = 5;
+  const timeout = 5000;
+  imgSpinner.style.visibility = "visible";
   xhr.open("GET", jsonFileName, true);
   xhr.timeout = timeout;
   xhr.send(null);
